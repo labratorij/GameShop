@@ -4,10 +4,7 @@ import org.springframework.context.annotation.Primary;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "developer", schema = "gameshop_eng")
@@ -24,17 +21,6 @@ public class Developer {
 
     @Column(name = "Email", length = 64, nullable = false, unique = true)
     private String email;
-
-    @OneToMany(mappedBy = "developer")
-    private List<Videogame> videogames = new ArrayList<Videogame>();
-
-    public Developer(String developer, String adress, String telephone, String email, List<Videogame> videogames) {
-        this.developer = developer;
-        this.adress = adress;
-        this.telephone = telephone;
-        this.email = email;
-        this.videogames = videogames;
-    }
 
     public Developer(String developer, String adress, String telephone, String email) {
         this.developer = developer;
@@ -79,14 +65,6 @@ public class Developer {
         this.email = email;
     }
 
-    public List<Videogame> getVideogames() {
-        return videogames;
-    }
-
-    public void setVideogames(List<Videogame> videogames) {
-        this.videogames = videogames;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -97,8 +75,7 @@ public class Developer {
         if (!developer.equals(developer1.developer)) return false;
         if (!adress.equals(developer1.adress)) return false;
         if (!telephone.equals(developer1.telephone)) return false;
-        if (!email.equals(developer1.email)) return false;
-        return videogames != null ? videogames.equals(developer1.videogames) : developer1.videogames == null;
+        return email.equals(developer1.email);
     }
 
     @Override
@@ -107,7 +84,6 @@ public class Developer {
         result = 31 * result + adress.hashCode();
         result = 31 * result + telephone.hashCode();
         result = 31 * result + email.hashCode();
-        result = 31 * result + (videogames != null ? videogames.hashCode() : 0);
         return result;
     }
 }
