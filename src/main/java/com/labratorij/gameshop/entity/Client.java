@@ -4,8 +4,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "Number of card", schema = "gameshop_eng")
@@ -26,9 +24,6 @@ public class Client implements Serializable {
     @Column(name = "Telephone", length = 64, unique = true)
     private String telephone;
 
-    @OneToMany(mappedBy = "client")
-    private List<Order> orderList = new ArrayList<Order>();
-
     public Client() {
     }
 
@@ -36,13 +31,6 @@ public class Client implements Serializable {
         this.name = name;
         this.email = email;
         this.telephone = telephone;
-    }
-
-    public Client(String name, String email, String telephone, List<Order> orderList) {
-        this.name = name;
-        this.email = email;
-        this.telephone = telephone;
-        this.orderList = orderList;
     }
 
     public int getId() {
@@ -77,14 +65,6 @@ public class Client implements Serializable {
         this.telephone = telephone;
     }
 
-    public List<Order> getOrderList() {
-        return orderList;
-    }
-
-    public void setOrderList(List<Order> orderList) {
-        this.orderList = orderList;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -95,8 +75,7 @@ public class Client implements Serializable {
         if (id != client.id) return false;
         if (!name.equals(client.name)) return false;
         if (!email.equals(client.email)) return false;
-        if (!telephone.equals(client.telephone)) return false;
-        return orderList != null ? orderList.equals(client.orderList) : client.orderList == null;
+        return telephone.equals(client.telephone);
     }
 
     @Override
@@ -105,7 +84,6 @@ public class Client implements Serializable {
         result = 31 * result + name.hashCode();
         result = 31 * result + email.hashCode();
         result = 31 * result + telephone.hashCode();
-        result = 31 * result + (orderList != null ? orderList.hashCode() : 0);
         return result;
     }
 }

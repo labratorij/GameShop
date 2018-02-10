@@ -3,8 +3,6 @@ package com.labratorij.gameshop.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "employee", schema = "gameshop_eng")
@@ -28,9 +26,6 @@ public class Employee {
     @Column(name = "Telephone")
     private int telephone;
 
-    @OneToMany(mappedBy = "employee")
-    private List<Order> orderList = new ArrayList<Order>();
-
     public Employee() {
     }
 
@@ -39,14 +34,6 @@ public class Employee {
         this.passport = passport;
         this.adress = adress;
         this.telephone = telephone;
-    }
-
-    public Employee(String name, int passport, String adress, int telephone, List<Order> orderList) {
-        this.name = name;
-        this.passport = passport;
-        this.adress = adress;
-        this.telephone = telephone;
-        this.orderList = orderList;
     }
 
     public int getId() {
@@ -87,39 +74,5 @@ public class Employee {
 
     public void setTelephone(int telephone) {
         this.telephone = telephone;
-    }
-
-    public List<Order> getOrderList() {
-        return orderList;
-    }
-
-    public void setOrderList(List<Order> orderList) {
-        this.orderList = orderList;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Employee employee = (Employee) o;
-
-        if (id != employee.id) return false;
-        if (passport != employee.passport) return false;
-        if (telephone != employee.telephone) return false;
-        if (!name.equals(employee.name)) return false;
-        if (!adress.equals(employee.adress)) return false;
-        return orderList != null ? orderList.equals(employee.orderList) : employee.orderList == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + name.hashCode();
-        result = 31 * result + passport;
-        result = 31 * result + adress.hashCode();
-        result = 31 * result + telephone;
-        result = 31 * result + (orderList != null ? orderList.hashCode() : 0);
-        return result;
     }
 }
